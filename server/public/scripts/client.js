@@ -17,9 +17,14 @@ function refreshTodos(){
   })
   .done(function(response){
     console.log(response[0]);
-    $li = $('<li></li>');
-    $li.text(response[0].todo_text);
+    var todoList = response;
+    var $li;
+    for (var i = 0; i < todoList.length; i += 1){
+      $li = $('<li></li>');
+      $li.text(response[i].todo_text);
     $('ul').append($li);
+    }
+    $('#todoIn').empty();
   })
   .fail(function(response){
     alert('Failed to retrieve list. Error:',response);
@@ -28,10 +33,22 @@ function refreshTodos(){
 
 function submitTodo(event){
   event.preventDefault();
-  var newTodo = {
-    todo_text: $('#todoIn').val()
-  };
-  $.ajax({
-    method: 'POST'
-  })
+  var todoText = $('#todoIn').val();
+  if (todoText){
+    var newTodo = {
+      todo_text: todoText
+    };
+    $.ajax({
+      method: 'POST',
+      url: '/todo',
+      data: newTodo
+    })
+    .done(function(response){
+      console.log('POST successful. Status:',response);
+      refreshTodos();
+    })
+    .fail(function(response){
+      alert('POST failed! Status:',response);
+    });
+  }
 }
