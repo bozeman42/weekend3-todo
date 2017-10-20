@@ -14,6 +14,7 @@ var config = {
 
 var pool = new pg.Pool(config);
 
+// retrieves all todo list items from the database
 router.get('/',function(req,res){
   console.log('in the GET route');
   pool.connect(function(errorConnectingToDb, db, done){
@@ -38,6 +39,7 @@ router.get('/',function(req,res){
   });
 });
 
+// adds new todo item to the database. state of "completed" is false by default
 router.post('/', function(req,res){
   var newTodo = req.body;
   console.log(newTodo);

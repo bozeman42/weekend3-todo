@@ -18,10 +18,20 @@ function refreshTodos(){
   .done(function(response){
     console.log(response[0]);
     var todoList = response;
+    var todo;
     var $li;
+    var $checkBox;
     for (var i = 0; i < todoList.length; i += 1){
+      todo = todoList[i];
       $li = $('<li></li>');
-      $li.text(response[i].todo_text);
+      console.log(todo.todo_complete);
+      if (todo.todo_complete){
+        $checkBox = $('<button>(X)</span></button>');
+      } else {
+        $checkBox = $('<button>( )</button>');
+      }
+      $li.append($checkBox);
+      $li.append(todo.todo_text);
     $('ul').append($li);
     }
     $('#todoIn').empty();
