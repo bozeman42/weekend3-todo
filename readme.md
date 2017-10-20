@@ -2,7 +2,8 @@
 -----------------------
 
 Requirements:
-*Base Mode*
+
+_Base Mode_
  - [ ] Create a front end experience that allows a user to create a task.
  - [ ] When the task is created, it should be stored inside of a database (SQL)
  - [ ] Whenever a task is created the front end should refresh to show all tasks that need to be completed.
