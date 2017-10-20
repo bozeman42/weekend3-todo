@@ -14,6 +14,26 @@ var config = {
 
 var pool = new pg.Pool(config);
 
+router.get('/',function(req,res){
+  console.log('in the GET route');
+  pool.connect(function(errorConnectingToDb, db, done){
+    if(errorConnectingToDb) {
+      console.log('Error connecting to DB');
+      res.sendStatus(500);
+    } else {
+      var queryText = 'SELECT * FROM "todo_list"';
+      db.query(queryText, function(errorQueryingDb, result){
+        if (errorQueryingDb){
+          console.log('Error querrying database',errorQueryingDb);
+          res.sendStatus(500);
+        } else {
+          console.log('returning rows');
+          res.send(result.rows);
+        }
+      });
+    }
+  });
+});
 
 
 module.exports = router;
