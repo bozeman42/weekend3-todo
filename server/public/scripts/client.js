@@ -7,6 +7,8 @@ function main(){
   refreshTodos();
 }
 
+
+// clear to-do list and request list from server
 function refreshTodos(){
   $('ul').empty();
   $.ajax({
@@ -20,7 +22,7 @@ function refreshTodos(){
     $('ul').append($li);
   })
   .fail(function(response){
-
+    alert('Failed to retrieve list. Error:',response);
   });
 }
 
