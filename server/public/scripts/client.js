@@ -12,7 +12,7 @@ function main(){
 function createEventHandlers(){
   $('#todoForm').submit(submitTodo);
   $('#todoContainer').on('click','.delete',deleteTodo);
-  $('#todoContainer').on('click','.complete',toggleComplete);
+  $('#todoContainer').on('click','.completeBtn',toggleComplete);
 }
 
 // clear to-do list, request todo items from server.
@@ -41,9 +41,11 @@ function appendTodo(todo){
   var $checkBox = $('<td></td>');
   var $completedButton;
   if (todo.todo_complete){
-    $completedButton = $('<button class="complete btn">(X)</span></button>');
+    $completedButton = $('<button class="completeBtn btn">(X)</span></button>');
+    $row.addClass('complete');
   } else {
-    $completedButton = $('<button class="complete btn">( )</button>');
+    $completedButton = $('<button class="completeBtn btn">( )</button>');
+    $row.removeClass('complete');
   }
   $completedButton.data('id',todo.todo_id);
   $checkBox.append($completedButton);
@@ -74,6 +76,7 @@ function submitTodo(event){
     })
     .done(function(response){
       console.log('POST successful. Status:',response);
+      $('#todoIn').val('')
       refreshTodos();
     })
     .fail(function(response){
@@ -82,6 +85,7 @@ function submitTodo(event){
   }
 }
 
+// sends a delete request for todo item associated with the clicked delete button
 function deleteTodo(){
   var id = $(this).data('id');
   console.log('Deleting item with id',id);
@@ -98,6 +102,7 @@ function deleteTodo(){
   });
 }
 
+// toggles completion state of item associated with the complete button
 function toggleComplete() {
   var id = $(this).data('id');
   console.log('Toggling complete for',id);
