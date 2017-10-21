@@ -1,38 +1,32 @@
 console.log('js');
 $(document).ready(main);
 
+// main code execution starts here
 function main(){
   console.log('jQ');
-  $('#todoForm').submit(submitTodo);
+  createEventHandlers();
   refreshTodos();
 }
 
+// create handlers for form submit, delete, and complete buttons
+function createEventHandlers(){
+  $('#todoForm').submit(submitTodo);
+  $('#todoContainer').on('click','.delete',deleteTodo);
+  $('#todoContainer').on('click','.complete',toggleComplete);
+}
 
-// clear to-do list and request list from server
+// clear to-do list, request todo items from server.
 function refreshTodos(){
-  $('ul').empty();
+  $todoList = $('#todoContainer');
+  $todoList.empty();
   $.ajax({
     method: 'GET',
     url: '/todo'
   })
   .done(function(response){
-    console.log(response[0]);
     var todoList = response;
-    var todo;
-    var $li;
-    var $checkBox;
     for (var i = 0; i < todoList.length; i += 1){
-      todo = todoList[i];
-      $li = $('<li></li>');
-      console.log(todo.todo_complete);
-      if (todo.todo_complete){
-        $checkBox = $('<button>(X)</span></button>');
-      } else {
-        $checkBox = $('<button>( )</button>');
-      }
-      $li.append($checkBox);
-      $li.append(todo.todo_text);
-    $('ul').append($li);
+      appendTodo(todoList[i]);
     }
     $('#todoIn').empty();
   })
@@ -41,6 +35,31 @@ function refreshTodos(){
   });
 }
 
+// constructs a table row for each to-do item and appends it to the table
+function appendTodo(todo){
+  var $row = $('<tr></tr>');
+  var $checkBox = $('<td></td>');
+  var $completedButton;
+  if (todo.todo_complete){
+    $completedButton = $('<button class="complete btn">(X)</span></button>');
+  } else {
+    $completedButton = $('<button class="complete btn">( )</button>');
+  }
+  $completedButton.data('id',todo.todo_id);
+  $checkBox.append($completedButton);
+  $row.append($checkBox);
+  $row.append(todo.todo_text);
+  var $deleteCell = $('<td></td>');
+  var $deleteButton = $('<button class="delete btn btn-danger">Delete</button>');
+  $deleteButton.data('id',todo.todo_id);
+  $deleteCell.append($deleteButton);
+  $row.append($deleteCell);
+  console.log($row);
+  $('#todoContainer').append($row);
+}
+
+// takes text input and transmits it to the server to be placed in the database.
+// sends object {todo_text}. New todo is incomplete by default
 function submitTodo(event){
   event.preventDefault();
   var todoText = $('#todoIn').val();
@@ -61,4 +80,36 @@ function submitTodo(event){
       alert('POST failed! Status:',response);
     });
   }
+}
+
+function deleteTodo(){
+  var id = $(this).data('id');
+  console.log('Deleting item with id',id);
+  $.ajax({
+    method: 'DELETE',
+    url: '/todo/'+ id
+  })
+  .done(function(response){
+    console.log('Delete succeeded with response',response);
+    refreshTodos();
+  })
+  .fail(function(response){
+    alert('Delete failed with response',response);
+  });
+}
+
+function toggleComplete() {
+  var id = $(this).data('id');
+  console.log('Toggling complete for',id);
+  $.ajax({
+    method: 'PUT',
+    url: '/todo/'+id
+  })
+  .done(function(response){
+    console.log('Toggle completed success',response);
+    refreshTodos();
+  })
+  .fail(function(response){
+    alert('Toggle completed failed',response)
+  });
 }

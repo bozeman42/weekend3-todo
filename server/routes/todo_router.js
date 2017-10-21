@@ -23,7 +23,7 @@ router.get('/',function(req,res){
       console.log('Error connecting to DB');
       res.sendStatus(500);
     } else {
-      var queryText = 'SELECT * FROM "todo_list"';
+      var queryText = 'SELECT * FROM "todo_list" ORDER BY "todo_complete", "todo_id"';
       db.query(queryText, function(errorQueryingDb, result){
         if (errorQueryingDb){
           console.log('Error querrying database');
@@ -58,6 +58,54 @@ router.post('/', function(req,res){
         } else {
           console.log('New todo added:',newTodo);
           res.sendStatus(201);
+        }
+      });
+    }
+  });
+});
+
+// Deletes todo item with id :id
+router.delete('/:id',function(req,res){
+  var todoId = req.params.id;
+  console.log('Deleting to-do',todoId);
+  pool.connect(function(errorConnectingToDb,db,done){
+    done();
+    if (errorConnectingToDb){
+      console.log('Error connecting to database in DELETE route');
+      res.sendStatus(500);
+    } else {
+      var queryText = 'DELETE FROM "todo_list" WHERE "todo_id" = $1;';
+      db.query(queryText,[todoId],function(errorQueryingDb){
+        if (errorQueryingDb){
+          console.log('Error in DELETE query');
+          console.log(queryText);
+          res.sendStatus(500);
+        } else {
+          console.log('Item deleted');
+          res.sendStatus(200);
+        }
+      });
+    }
+  });
+});
+
+router.put('/:id',function(req,res){
+  var todoId = req.params.id;
+  console.log('Toggling complete on to-do',todoId);
+  pool.connect(function(errorConnectingToDb,db,done){
+    done();
+    if (errorConnectingToDb){
+      console.log('Error connecting to database in PUT route');
+      res.sendStatus(500);
+    } else {
+      var queryText = 'UPDATE "todo_list" SET "todo_complete" = NOT "todo_complete" WHERE "todo_id" = $1;';
+      db.query(queryText,[todoId],function(errorQueryingDb){
+        if (errorQueryingDb){
+          console.log('Error in UPDATE query');
+          res.sendStatus(500);
+        } else {
+          console.log('UPDATE succeeded');
+          res.sendStatus(200);
         }
       });
     }
