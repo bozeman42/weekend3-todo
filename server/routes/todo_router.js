@@ -4,15 +4,17 @@ var pg = require('pg');
 var router = express.Router();
 
 // create pg pool config
-var config = {
-  database: 'deneb',
-  host: 'localhost',
-  port: 5432,
-  max: 10,
-  idleTimeoutMillis: 30000
-};
+// var config = {
+//   database: 'deneb',
+//   host: 'localhost',
+//   port: 5432,
+//   max: 10,
+//   idleTimeoutMillis: 30000
+// };
 
-var pool = new pg.Pool(config);
+
+
+var pool = require('../modules/pool.js';
 
 // retrieves all todo list items from the database
 router.get('/',function(req,res){
