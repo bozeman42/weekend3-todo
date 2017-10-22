@@ -7,11 +7,10 @@
 CREATE TABLE "todo_list" (
     "todo_id" serial PRIMARY KEY,
     "todo_text" varchar(500),
-    "todo_complete" boolean NOT NULL DEFAULT 'false',
-    "todo_due" date
+    "todo_complete" boolean NOT NULL DEFAULT 'false'
 )
 
-INSERT INTO "todo_list" ("todo_text","todo_complete") VALUES ('Complete weekend project 3','false','2017-10-23');
+INSERT INTO "todo_list" ("todo_text","todo_complete") VALUES ('Complete weekend project 3','false');
 ```
 
 Requirements:
@@ -31,7 +30,7 @@ Requirements:
  - [X] Use jQuery to add animation to your page when you add or remove an item to the list.
 
  *Pro Mode*
- - [ ] Publish your app to Heroku.
+ - [X] Publish your app to Heroku.
  - [X] Adjust the logic so that completed tasks are brought to the bottom of the page, where the remaining tasks left to complete are brought to the top of the list.
  - [ ] Add a due date to your tasks and put the items which need to be completed next at the top of the page. Highlight overdue tasks in red.
  - [ ] Add any additional features that you think would be useful or interesting!
