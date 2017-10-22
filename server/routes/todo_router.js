@@ -23,7 +23,7 @@ router.get('/',function(req,res){
       console.log('Error connecting to DB');
       res.sendStatus(500);
     } else {
-      var queryText = 'SELECT * FROM "todo_list" ORDER BY "todo_complete", "todo_due", "todo_id"';
+      var queryText = 'SELECT * FROM "todo_list" ORDER BY "todo_complete", "todo_id"';
       db.query(queryText, function(errorQueryingDb, result){
         if (errorQueryingDb){
           console.log('Error querrying database in GET route');
@@ -49,8 +49,8 @@ router.post('/', function(req,res){
       console.log('Error connecting to DB');
       res.sendStatus(500);
     } else {
-      var queryText = 'INSERT INTO "todo_list" ("todo_text","todo_due") VALUES ($1,$2)';
-      db.query(queryText,[newTodo.todo_text,newTodo.todo_due],function(errorQueryingDb,result) {
+      var queryText = 'INSERT INTO "todo_list" ("todo_text") VALUES ($1)';
+      db.query(queryText,[newTodo.todo_text],function(errorQueryingDb,result) {
         if (errorQueryingDb) {
           console.log('Error in POST route querying database with');
           console.log(queryText);

@@ -75,8 +75,8 @@ function appendTodo(todo,id){
   $itemText = $('<div class="itemText">'+todo.todo_text+'</div>');
   $rowDiv.append($itemText);
   var $deleteButton = $('<button class="deleteBtn delete btn btn-danger">Delete</button>');
-  var $confirmation = $('<div class="confirmationInterface"><div>')
-  $confirmation.append('Are you sure?');
+  var $confirmation = $('<div class="confirmationInterface row"><div>')
+  $confirmation.append('Are you sure?<br>');
   $confirmDeleteBtn = $('<button class="confirmDelete btn btn-danger">DELETE</button>');
   $confirmDeleteBtn.data('id',todo.todo_id);
   $confirmation.append($confirmDeleteBtn);
@@ -97,11 +97,9 @@ function appendTodo(todo,id){
 function submitTodo(event){
   event.preventDefault();
   var todoText = $('#todoIn').val();
-  var todoDue = $('#dateIn').val();
   if (todoText){
     var newTodo = {
-      todo_text: todoText,
-      todo_due: todoDue
+      todo_text: todoText
     };
     $.ajax({
       method: 'POST',
