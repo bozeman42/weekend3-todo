@@ -5,7 +5,7 @@
 .itemText {
   font-family: 'Indie Flower', cursive;
   font-size: 200%;
-  width: 300px;
+  width: 100%;
   margin: 10px;
   padding: 5px;
   display: inline-flex;
@@ -31,19 +31,23 @@ li {
   align-items: center;
 }
 
-.completedContainer { 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 75px;
-  width: 60px;
-  background-color: cornflowerblue;
-}
-
-.deleteBtn {
-  float: right;
-}
-
 .confirmationInterface {
   float: right;
+}
+
+.itemDiv {
+  border: solid 1px black;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.container {
+  background-color: #EEE;
+  min-height: 500px;
+  padding: 50px;
+}
+
+#inputRow {
+  padding: 25px;
 }

@@ -7,10 +7,11 @@
 CREATE TABLE "todo_list" (
     "todo_id" serial PRIMARY KEY,
     "todo_text" varchar(500),
-    "todo_complete" boolean NOT NULL DEFAULT 'false'
+    "todo_complete" boolean NOT NULL DEFAULT 'false',
+    "todo_due" date
 )
 
-INSERT INTO "todo_list" ("todo_text","todo_complete") VALUES ('Complete weekend project 3','false');
+INSERT INTO "todo_list" ("todo_text","todo_complete") VALUES ('Complete weekend project 3','false','2017-10-23');
 ```
 
 Requirements:
@@ -26,8 +27,8 @@ Requirements:
  - [ ] Style!
 
 *Hard Mode*
- - [ ] In whatever fashion you would like, create an 'are you sure: yes / no' option when deleting a task.
- - [ ] Use jQuery to add animation to your page when you add or remove an item to the list.
+ - [X] In whatever fashion you would like, create an 'are you sure: yes / no' option when deleting a task.
+ - [X] Use jQuery to add animation to your page when you add or remove an item to the list.
 
  *Pro Mode*
  - [ ] Publish your app to Heroku.

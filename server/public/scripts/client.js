@@ -97,10 +97,11 @@ function appendTodo(todo,id){
 function submitTodo(event){
   event.preventDefault();
   var todoText = $('#todoIn').val();
-  console.log($('#priority').val());
+  var todoDue = $('#dateIn').val();
   if (todoText){
     var newTodo = {
-      todo_text: todoText
+      todo_text: todoText,
+      todo_due: todoDue
     };
     $.ajax({
       method: 'POST',
