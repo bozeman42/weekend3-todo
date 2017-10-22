@@ -21,28 +21,18 @@
       <form id="todoForm">
         <input type="text" id="todoIn" placeholder="To-do"/>
         <input type="date" id="dateIn">
-        <select id="priority" name="priority">
+        <!-- <select id="priority" name="priority">
           <option value="high">High</option>
           <option value="normal" selected>Normal</option>
           <option value="low">Low</option>
-        </select>
+        </select> -->
         <input type="submit" class="btn btn-primary" id="submitButton" value="Submit" />
       </form>
     </div>
     <div class="row">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th id="completedColumn">Completed?</th>
-            <th>Item</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody id="todoContainer">
+      <ul id="todoContainer">
 
-        </tbody>
-      </table>
-
+      </ul>
     </div>
   </div>
 </body>

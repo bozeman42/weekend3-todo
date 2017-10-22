@@ -5,7 +5,7 @@ $(document).ready(main);
 function main(){
   console.log('jQ');
   createEventHandlers();
-  refreshTodos();
+  refreshTodos(0);
 }
 
 // create handlers for form submit, delete, and complete buttons
@@ -16,7 +16,13 @@ function createEventHandlers(){
 }
 
 // clear to-do list, request todo items from server.
-function refreshTodos(){
+// id is one of the following:
+// -1 if the latest item (highest todo_id) should be animated
+// id will be set to the highest id in this function
+// 0 if no item should be animated
+// a valid todo_id if a specific item should be animated
+// this is passed along to the appendTodo function
+function refreshTodos(id){
   $todoList = $('#todoContainer');
   $todoList.empty();
   $.ajax({
@@ -25,9 +31,18 @@ function refreshTodos(){
   })
   .done(function(response){
     var todoList = response;
-    for (var i = 0; i < todoList.length; i += 1){
-      appendTodo(todoList[i]);
+    // if id == -1, set id to the highest todo_id of returned values
+    if (id === -1) {
+      todoList.forEach(function(todo){
+        id = todo.todo_id > id? todo.todo_id:id;
+      });
+      console.log('Max id is',id);
     }
+    for (var i = 0; i < todoList.length; i += 1){
+      appendTodo(todoList[i],id);
+      console.log(todoList[i]);
+    }
+    $('li:hidden').slideDown();
     $('#todoIn').empty();
   })
   .fail(function(response){
@@ -35,10 +50,13 @@ function refreshTodos(){
   });
 }
 
-// constructs a table row for each to-do item and appends it to the table
-function appendTodo(todo){
-  var $row = $('<tr></tr>');
-  var $checkBox = $('<td></td>');
+// constructs a list item for each to-do item and appends it to the list
+// id is one of the following:
+// 0 if no item should be animated
+// a valid todo_id if a specific item should be animated
+function appendTodo(todo,id){
+  var $row = $('<li></li>');
+  var $rowDiv = $('<div class="itemDiv"></div>');
   var $completedButton = $('<div class="completeBtn"></div>')
   if (todo.todo_complete){
     $completedButton.append('<span>&#x2713;</span>');
@@ -47,15 +65,17 @@ function appendTodo(todo){
     $completedButton.append('<span></span>');
   }
   $completedButton.data('id',todo.todo_id);
-  $checkBox.append($completedButton);
-  $row.append($checkBox);
-  $row.append('<td class="itemText"><div>'+todo.todo_text+'</div></td>');
-  var $deleteCell = $('<td><div></div></td>');
-  var $deleteButton = $('<button class="delete btn btn-danger">Delete</button>');
+  $rowDiv.append($completedButton);
+  $itemText = $('<div class="itemText">'+todo.todo_text+'</div>');
+  $rowDiv.append($itemText);
+  var $deleteButton = $('<button class="deleteBtn delete btn btn-danger">Delete</button>');
   $deleteButton.data('id',todo.todo_id);
-  $deleteCell.append($deleteButton);
-  $row.append($deleteCell);
+  $rowDiv.append($deleteButton);
   console.log($row);
+  $row.append($rowDiv);
+  if (id === todo.todo_id) {
+    $row.hide();
+  }
   $('#todoContainer').append($row);
 }
 
@@ -77,7 +97,7 @@ function submitTodo(event){
     .done(function(response){
       console.log('POST successful. Status:',response);
       $('#todoIn').val('')
-      refreshTodos();
+      refreshTodos(-1);
     })
     .fail(function(response){
       alert('POST failed! Status:',response);
@@ -88,7 +108,7 @@ function submitTodo(event){
 // sends a delete request for todo item associated with the clicked delete button
 function deleteTodo(){
   var id = $(this).data('id');
-  var $row = $(this).closest('tr');
+  var $row = $(this).closest('li');
   console.log('Deleting item with id',id);
   $.ajax({
     method: 'DELETE',
@@ -96,7 +116,8 @@ function deleteTodo(){
   })
   .done(function(response){
     console.log('Delete succeeded with response',response);
-    refreshTodos();
+    $row.slideUp(200);
+    setTimeout(refreshTodos,200,0);
   })
   .fail(function(response){
     alert('Delete failed with response',response);
@@ -106,6 +127,7 @@ function deleteTodo(){
 // toggles completion state of item associated with the complete button
 function toggleComplete() {
   var id = $(this).data('id');
+  var $row = $(this).closest('li');
   console.log('Toggling complete for',id);
   $.ajax({
     method: 'PUT',
@@ -113,7 +135,8 @@ function toggleComplete() {
   })
   .done(function(response){
     console.log('Toggle completed success');
-    refreshTodos();
+    $row.slideUp(200);
+    setTimeout(refreshTodos,200,id);
   })
   .fail(function(response){
     alert('Toggle completed failed',response)

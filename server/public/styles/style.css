@@ -4,22 +4,41 @@
 
 .itemText {
   font-family: 'Indie Flower', cursive;
-  font-size: 200%;  
+  font-size: 200%;
+  width: 300px;
+  margin: 10px;
+  padding: 5px;
+  display: inline-flex;
+  justify-content: left;
+  align-items: center;
 }
 
-
-#completedColumn {
-  width: 60px;
+li {
+  list-style: none;
 }
 
 .completeBtn {
-  display: inline-block;
+  float: left;
+  display: inline-flex;
   width: 50px;
   height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border: solid 10px green;
   border-radius: 50%;
   font-size: 300%;
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.completedContainer { 
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 75px;
+  width: 60px;
+  background-color: cornflowerblue;
+}
+
+.deleteBtn {
+  float: right;
 }
