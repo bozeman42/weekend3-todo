@@ -14,7 +14,7 @@ var router = express.Router();
 
 
 
-var pool = require('../modules/pool.js';
+var pool = require('../modules/pool.js');
 
 // retrieves all todo list items from the database
 router.get('/',function(req,res){
