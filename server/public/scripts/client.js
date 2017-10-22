@@ -11,8 +11,14 @@ function main(){
 // create handlers for form submit, delete, and complete buttons
 function createEventHandlers(){
   $('#todoForm').submit(submitTodo);
-  $('#todoContainer').on('click','.delete',deleteTodo);
+  $('#todoContainer').on('click','.delete',areYouSure);
   $('#todoContainer').on('click','.completeBtn',toggleComplete);
+  $('#todoContainer').on('click','.confirmDelete',deleteTodo);
+  $('#todoContainer').on('click','.cancelDeleteBtn',refreshPage);
+}
+
+function refreshPage(){
+  refreshTodos(0);
 }
 
 // clear to-do list, request todo items from server.
@@ -69,7 +75,14 @@ function appendTodo(todo,id){
   $itemText = $('<div class="itemText">'+todo.todo_text+'</div>');
   $rowDiv.append($itemText);
   var $deleteButton = $('<button class="deleteBtn delete btn btn-danger">Delete</button>');
-  $deleteButton.data('id',todo.todo_id);
+  var $confirmation = $('<div class="confirmationInterface"><div>')
+  $confirmation.append('Are you sure?');
+  $confirmDeleteBtn = $('<button class="confirmDelete btn btn-danger">DELETE</button>');
+  $confirmDeleteBtn.data('id',todo.todo_id);
+  $confirmation.append($confirmDeleteBtn);
+  $confirmation.append('<button class="cancelDeleteBtn btn btn-primary">Cancel</button>');
+  $confirmation.hide();
+  $rowDiv.append($confirmation);
   $rowDiv.append($deleteButton);
   console.log($row);
   $row.append($rowDiv);
@@ -103,6 +116,11 @@ function submitTodo(event){
       alert('POST failed! Status:',response);
     });
   }
+}
+
+function areYouSure(){
+  $(this).hide();
+  $(this).closest('.itemDiv').children('.confirmationInterface').show();
 }
 
 // sends a delete request for todo item associated with the clicked delete button
