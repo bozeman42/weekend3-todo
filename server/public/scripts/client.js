@@ -30,7 +30,6 @@ function refreshPage(){
 // this is passed along to the appendTodo function
 function refreshTodos(id){
   $todoList = $('#todoContainer');
-  $todoList.empty();
   $.ajax({
     method: 'GET',
     url: '/todo'
@@ -44,6 +43,7 @@ function refreshTodos(id){
       });
       console.log('Max id is',id);
     }
+    $todoList.empty();
     for (var i = 0; i < todoList.length; i += 1){
       appendTodo(todoList[i],id);
       console.log(todoList[i]);
