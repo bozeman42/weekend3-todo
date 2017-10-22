@@ -26,12 +26,12 @@ router.get('/',function(req,res){
       var queryText = 'SELECT * FROM "todo_list" ORDER BY "todo_complete", "todo_id"';
       db.query(queryText, function(errorQueryingDb, result){
         if (errorQueryingDb){
-          console.log('Error querrying database');
+          console.log('Error querrying database in GET route');
           console.log(queryText);
           console.log(errorQueryingDb);
           res.sendStatus(500);
         } else {
-          console.log('returning rows');
+          console.log('GET route returning rows');
           res.send(result.rows);
         }
       });
@@ -52,7 +52,7 @@ router.post('/', function(req,res){
       var queryText = 'INSERT INTO "todo_list" ("todo_text") VALUES ($1)';
       db.query(queryText,[newTodo.todo_text],function(errorQueryingDb,result) {
         if (errorQueryingDb) {
-          console.log('Error querying database with');
+          console.log('Error in POST route querying database with');
           console.log(queryText);
           res.sendStatus(500);
         } else {

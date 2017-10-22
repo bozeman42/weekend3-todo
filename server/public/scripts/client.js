@@ -49,8 +49,8 @@ function appendTodo(todo){
   $completedButton.data('id',todo.todo_id);
   $checkBox.append($completedButton);
   $row.append($checkBox);
-  $row.append('<td class="itemText">'+todo.todo_text+'</td>');
-  var $deleteCell = $('<td></td>');
+  $row.append('<td class="itemText"><div>'+todo.todo_text+'</div></td>');
+  var $deleteCell = $('<td><div></div></td>');
   var $deleteButton = $('<button class="delete btn btn-danger">Delete</button>');
   $deleteButton.data('id',todo.todo_id);
   $deleteCell.append($deleteButton);
