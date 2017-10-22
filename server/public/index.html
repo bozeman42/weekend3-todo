@@ -7,6 +7,7 @@
   <script src="vendors/jquery.js"></script>
   <script src="vendors/bootstrap/js/bootstrap.js"></script>
   <link rel="stylesheet" href="vendors/bootstrap/css/bootstrap.css">
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">  
   <link rel="stylesheet" href="styles/style.css">
   <script src="scripts/client.js"></script>
   <title>To-Do List: Weekend 3 Challenge</title>
@@ -19,20 +20,29 @@
     <div class="row inputRow">
       <form id="todoForm">
         <input type="text" id="todoIn" placeholder="To-do"/>
+        <input type="date" id="dateIn">
+        <select id="priority" name="priority">
+          <option value="high">High</option>
+          <option value="normal" selected>Normal</option>
+          <option value="low">Low</option>
+        </select>
         <input type="submit" class="btn btn-primary" id="submitButton" value="Submit" />
       </form>
     </div>
     <div class="row">
-      <table>
+      <table class="table table-bordered">
         <thead>
-          <th>Completed?</th>
-          <th>Item</th>
-          <th>Delete</th>
+          <tr>
+            <th id="completedColumn">Completed?</th>
+            <th>Item</th>
+            <th>Delete</th>
+          </tr>
         </thead>
         <tbody id="todoContainer">
 
         </tbody>
       </table>
+
     </div>
   </div>
 </body>

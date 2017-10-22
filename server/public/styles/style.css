@@ -2,4 +2,28 @@
   background-color: rgb(183, 241, 183);
 }
 
-#todoContainer
+.itemText {
+  font-family: 'Indie Flower', cursive;
+  font-size: 200%;  
+}
+
+.complete .itemText {
+  text-decoration: line-through;
+}
+
+#completedColumn {
+  width: 90px;
+  background-color: red;
+
+}
+
+.completeBtn {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 3px blue;
+  border-radius: 4px;
+}

@@ -39,18 +39,17 @@ function refreshTodos(){
 function appendTodo(todo){
   var $row = $('<tr></tr>');
   var $checkBox = $('<td></td>');
-  var $completedButton;
+  var $completedButton = $('<div class="completeBtn"></div>')
   if (todo.todo_complete){
-    $completedButton = $('<button class="completeBtn btn">(X)</span></button>');
+    $completedButton.append('<span>&#x2713;</span>');
     $row.addClass('complete');
   } else {
-    $completedButton = $('<button class="completeBtn btn">( )</button>');
-    $row.removeClass('complete');
+    $completedButton.append('<span></span>');
   }
   $completedButton.data('id',todo.todo_id);
   $checkBox.append($completedButton);
   $row.append($checkBox);
-  $row.append(todo.todo_text);
+  $row.append('<td class="itemText">'+todo.todo_text+'</td>');
   var $deleteCell = $('<td></td>');
   var $deleteButton = $('<button class="delete btn btn-danger">Delete</button>');
   $deleteButton.data('id',todo.todo_id);
@@ -65,6 +64,7 @@ function appendTodo(todo){
 function submitTodo(event){
   event.preventDefault();
   var todoText = $('#todoIn').val();
+  console.log($('#priority').val());
   if (todoText){
     var newTodo = {
       todo_text: todoText
@@ -88,6 +88,7 @@ function submitTodo(event){
 // sends a delete request for todo item associated with the clicked delete button
 function deleteTodo(){
   var id = $(this).data('id');
+  var $row = $(this).closest('tr');
   console.log('Deleting item with id',id);
   $.ajax({
     method: 'DELETE',
@@ -111,7 +112,7 @@ function toggleComplete() {
     url: '/todo/'+id
   })
   .done(function(response){
-    console.log('Toggle completed success',response);
+    console.log('Toggle completed success');
     refreshTodos();
   })
   .fail(function(response){
