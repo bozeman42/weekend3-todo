@@ -67,6 +67,9 @@ function appendTodo(todo,id){
   var date = new Date(todo.todo_duedate);
   var today = new Date();
   var overdue = false;
+  date.setHours(23);
+  date.setMinutes(59);
+  date.setSeconds(59);
   if (date < today) {
     $row.addClass('overdue');
   }
