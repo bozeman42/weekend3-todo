@@ -7,10 +7,11 @@
 CREATE TABLE "todo_list" (
     "todo_id" serial PRIMARY KEY,
     "todo_text" varchar(500),
-    "todo_complete" boolean NOT NULL DEFAULT 'false'
-)
+    "todo_complete" boolean NOT NULL DEFAULT 'false',
+    "todo_duedate" date
+);
 
-INSERT INTO "todo_list" ("todo_text","todo_complete") VALUES ('Complete weekend project 3','false');
+INSERT INTO "todo_list" ("todo_text","todo_complete","todo_duedate") VALUES ('Complete weekend project 3','false','2017-10-23');
 ```
 
 Requirements:
