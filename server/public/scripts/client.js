@@ -64,15 +64,18 @@ function appendTodo(todo,id){
   var $row = $('<li></li>');
   var $rowDiv = $('<div class="itemDiv"></div>');
   var $completedButton = $('<div class="completeBtn"></div>');
-  var date = new Date(todo.todo_duedate);
-  var today = new Date();
+  var date = todo.todo_duedate.match(/(\d{4})-(\d{2})-(\d{2})/);
+  console.log("todo_duedate before tests:",todo.todo_duedate);
+  var dueDate = new Date(todo.todo_duedate);
+  dueDate.setHours(23);
+  dueDate.setMinutes(59);
+  dueDate.setSeconds(59);
+  var today = Date();
+  console.log("due date:",dueDate,"today",today);
   var overdue = false;
-  date.setHours(23);
-  date.setMinutes(59);
-  date.setSeconds(59);
-  if (date < today) {
+  if (dueDate <= today) {
     $row.addClass('overdue');
-  }
+  } 
   if (todo.todo_complete){
     $completedButton.append('<span>&#x2713;</span>');
     $row.addClass('complete');
@@ -81,7 +84,7 @@ function appendTodo(todo,id){
   }
   $completedButton.data('id',todo.todo_id);
   $rowDiv.append($completedButton);
-  $itemText = $('<div class="itemText"><span class="dueDate">Due: ' + date.toDateString() + '</span><br><span class="todoTextSpan">' + todo.todo_text+'</span></div>');
+  $itemText = $('<div class="itemText"><span class="dueDate">Due: ' + todo.todo_duedate.toString() + '</span><br><span class="todoTextSpan">' + todo.todo_text+'</span></div>');
   $rowDiv.append($itemText);
   var $deleteButton = $('<button class="deleteBtn delete btn btn-danger">Delete</button>');
   var $confirmation = $('<div class="confirmationInterface row"><div>')
