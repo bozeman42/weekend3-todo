@@ -1,6 +1,8 @@
 console.log('js');
 $(document).ready(main);
 
+var ANIMATION_DURATION = 50;
+
 // main code execution starts here
 function main(){
   console.log('jQ');
@@ -48,7 +50,7 @@ function refreshTodos(id){
       appendTodo(todoList[i],id);
       console.log(todoList[i]);
     }
-    $('li:hidden').slideDown(100);
+    $('li:hidden').slideDown(ANIMATION_DURATION);
     $('#todoIn').empty();
   })
   .fail(function(response){
@@ -152,8 +154,8 @@ function deleteTodo(){
   })
   .done(function(response){
     console.log('Delete succeeded with response',response);
-    $row.slideUp(100);
-    setTimeout(refreshTodos,100,0);
+    $row.slideUp(ANIMATION_DURATION);
+    setTimeout(refreshTodos,ANIMATION_DURATION,0);
   })
   .fail(function(response){
     alert('Delete failed with response',response);
@@ -171,8 +173,8 @@ function toggleComplete() {
   })
   .done(function(response){
     console.log('Toggle completed success');
-    $row.slideUp(100);
-    setTimeout(refreshTodos,100,id);
+    $row.slideUp(ANIMATION_DURATION);
+    setTimeout(refreshTodos,ANIMATION_DURATION,id);
   })
   .fail(function(response){
     alert('Toggle completed failed',response)
