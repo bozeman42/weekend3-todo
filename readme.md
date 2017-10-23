@@ -23,7 +23,7 @@ Requirements:
  - [X] When a task is complete, its visual representation should change on the front end (for example, the background of the task container could change from gray to green, as well as the complete option 'checked off'. Each of these are accomplished in CSS, but will need to hook into logic to know whether or not the task is complete)
  - [X] Whether or not a task is complete should also be stored in the database.
  - [X] Deleting a task should remove it both from the Front End as well as the Database.
- - [ ] Style!
+ - [X] Style!
 
 *Hard Mode*
  - [X] In whatever fashion you would like, create an 'are you sure: yes / no' option when deleting a task.
@@ -32,5 +32,5 @@ Requirements:
  *Pro Mode*
  - [X] Publish your app to Heroku.
  - [X] Adjust the logic so that completed tasks are brought to the bottom of the page, where the remaining tasks left to complete are brought to the top of the list.
- - [ ] Add a due date to your tasks and put the items which need to be completed next at the top of the page. Highlight overdue tasks in red.
+ - [X] Add a due date to your tasks and put the items which need to be completed next at the top of the page. Highlight overdue tasks in red.
  - [ ] Add any additional features that you think would be useful or interesting!

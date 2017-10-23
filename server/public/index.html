@@ -18,15 +18,21 @@
       <h1>To-Do List</h1>
     </div>
     <div id="inputRow" class="row">
-      <form id="todoForm">
-        <input type="text" id="todoIn" placeholder="To-do"/>
-        <!-- <input type="date" id="dateIn"> -->
+      <form class="form-inline" id="todoForm">
+        <div class="form-group">
+          <label for="todoIn">To-do:</label>
+          <input type="text" class="form-control" id="todoIn" placeholder="To-do"/>
+        </div>
+        <div class="form-group">
+          <label for="dateIn">Due date:</label>
+          <input class="form-control" type="date" id="dateIn">
+        </div>
         <!-- <select id="priority" name="priority">
           <option value="high">High</option>
           <option value="normal" selected>Normal</option>
           <option value="low">Low</option>
         </select> -->
-        <input type="submit" class="btn btn-primary" id="submitButton" value="Submit" />
+          <input type="submit" class="btn btn-primary" id="submitButton" value="Submit" />
       </form>
     </div>
     <div class="row">

@@ -63,7 +63,13 @@ function refreshTodos(id){
 function appendTodo(todo,id){
   var $row = $('<li></li>');
   var $rowDiv = $('<div class="itemDiv"></div>');
-  var $completedButton = $('<div class="completeBtn"></div>')
+  var $completedButton = $('<div class="completeBtn"></div>');
+  var date = new Date(todo.todo_duedate);
+  var today = new Date();
+  var overdue = false;
+  if (date < today) {
+    $row.addClass('overdue');
+  }
   if (todo.todo_complete){
     $completedButton.append('<span>&#x2713;</span>');
     $row.addClass('complete');
@@ -72,7 +78,7 @@ function appendTodo(todo,id){
   }
   $completedButton.data('id',todo.todo_id);
   $rowDiv.append($completedButton);
-  $itemText = $('<div class="itemText">'+todo.todo_text+'</div>');
+  $itemText = $('<div class="itemText"><span class="dueDate">Due: ' + date.toDateString() + '</span><br><span class="todoTextSpan">' + todo.todo_text+'</span></div>');
   $rowDiv.append($itemText);
   var $deleteButton = $('<button class="deleteBtn delete btn btn-danger">Delete</button>');
   var $confirmation = $('<div class="confirmationInterface row"><div>')
@@ -96,11 +102,24 @@ function appendTodo(todo,id){
 // sends object {todo_text}. New todo is incomplete by default
 function submitTodo(event){
   event.preventDefault();
+  $('#todoIn').closest('div').removeClass('has-error');
+  $('#dateIn').removeClass('redBorder');
   var todoText = $('#todoIn').val();
-  if (todoText){
+  var todoDueDate = $('#dateIn').val();
+  console.log('todoDueDate',!todoDueDate);
+  if (!todoText || !todoDueDate){
+    if (!todoText) {
+      $('#todoIn').closest('div').addClass('has-error');
+    }
+    if (!todoDueDate) {
+      $('#dateIn').addClass('redBorder');
+    }
+  } else {
     var newTodo = {
-      todo_text: todoText
+      todo_text: todoText,
+      todo_duedate: todoDueDate
     };
+    console.log('Before POST', newTodo);
     $.ajax({
       method: 'POST',
       url: '/todo',
