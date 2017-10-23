@@ -1,10 +1,10 @@
 var express = require('express');
 var pg = require('pg');
-var types = pg.types;
-var timestampOID = 1114;
-types.setTypeParser(1114, function(stringValue){
-  return new Date(Date.parse(stringValue + "+0000"));
-});
+// var types = pg.types;
+// var timestampOID = 1114;
+// types.setTypeParser(1114, function(stringValue){
+//   return new Date(Date.parse(stringValue + "+0000"));
+// });
 var router = express.Router();
 
 // create pg pool config
