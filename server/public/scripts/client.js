@@ -48,7 +48,7 @@ function refreshTodos(id){
       appendTodo(todoList[i],id);
       console.log(todoList[i]);
     }
-    $('li:hidden').slideDown();
+    $('li:hidden').slideDown(100);
     $('#todoIn').empty();
   })
   .fail(function(response){
@@ -152,8 +152,8 @@ function deleteTodo(){
   })
   .done(function(response){
     console.log('Delete succeeded with response',response);
-    $row.slideUp(200);
-    setTimeout(refreshTodos,200,0);
+    $row.slideUp(100);
+    setTimeout(refreshTodos,100,0);
   })
   .fail(function(response){
     alert('Delete failed with response',response);
@@ -171,8 +171,8 @@ function toggleComplete() {
   })
   .done(function(response){
     console.log('Toggle completed success');
-    $row.slideUp(200);
-    setTimeout(refreshTodos,200,id);
+    $row.slideUp(100);
+    setTimeout(refreshTodos,100,id);
   })
   .fail(function(response){
     alert('Toggle completed failed',response)
